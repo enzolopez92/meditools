@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Success Rate Calculator</title>
+  <style>
+    .form-container {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      color: #FFFFFF;
+    }
+
+    .success-rate-label {
+      font-size: 24px;
+      color: #28B5C3;
+    }
+
+    .success-rate-value {
+      font-size: 36px;
+      color: #FFFFFF;
+      font-weight: bold;
+    }
+
+    .form-container label {
+      color: #FFFFFF;
+    }
+  </style>
+  <script>
+    function calculateSuccessRate() {
+      var ageInput = document.getElementById("age");
+      var yearsTryingInput = document.getElementById("yearsTrying");
+
+      var age = parseInt(ageInput.value);
+      var yearsTrying = parseInt(yearsTryingInput.value);
+
+      var errorMessage = document.getElementById("error-message");
+      errorMessage.innerHTML = "";
+
+      if (isNaN(age) || isNaN(yearsTrying) || age < 18 || yearsTrying < 0) {
+        errorMessage.innerHTML = "Please enter valid values for Age and Years Trying.";
+        return;
+      }
+
+      var ovulationProblem = document.getElementById("ovulationProblem").value;
+      var fertilityProblem = document.getElementById("fertilityProblem").value;
+      var pregnantBefore = document.getElementById("pregnantBefore").value;
+      var tubesIssue = document.getElementById("tubesIssue").value;
+      var maleFertilityIssue = document.getElementById("maleFertilityIssue").value;
+
+      var successRate = 68.07153728313025 - 1.146408873728946 * age - 0.3800917025324026 * yearsTrying - 0.8575272172001086 * (ovulationProblem === "yes" ? 1 : 0) - 0.4590398990779754 * (fertilityProblem === "yes" ? 1 : 0) - 4.415717079995383 * (pregnantBefore === "yes" ? 1 : 0) + 1.5653071722998546 * (tubesIssue === "yes" ? 1 : 0) - 4.767449657072502 * (maleFertilityIssue === "yes" ? 1 : 0);
+
+      var successRateElement = document.getElementById("result2");
+      successRateElement.innerHTML = "Success Rate: <span class='success-rate-value'>" + successRate.toFixed(2) + "%</span>";
+    }
+  </script>
+</head>
+<body>
+  <form class="form-container">
+    <label for="age" style="color: white;">Age:</label>
+    <input type="number" id="age" name="age" required>
+
+    <label for="yearsTrying" style="color: white;">Years Trying:</label>
+    <input type="number" id="yearsTrying" name="yearsTrying" required>
+
+    <label for="ovulationProblem" style="color: white;">Ovulation Problem:</label>
+    <select id="ovulationProblem" name="ovulationProblem" required>
+      <option value="no">No</option>
+      <option value="yes">Yes</option>
+    </select>
+
+    <label for="fertilityProblem" style="color: white;">Fertility Problem:</label>
+    <select id="fertilityProblem" name="fertilityProblem" required>
+      <option value="no">No</option>
+      <option value="yes">Yes</option>
+    </select>
+
+    <label for="pregnantBefore" style="color: white;">Pregnant Before:</label>
+    <select id="pregnantBefore" name="pregnantBefore" required>
+      <option value="no">No</option>
+      <option value="yes">Yes</option>
+    </select>
+
+    <label for="tubesIssue" style="color: white;">Tubes Issue:</label>
+    <select id="tubesIssue" name="tubesIssue" required>
+      <option value="no">No</option>
+      <option value="yes">Yes</option>
+    </select>
+
+    <label for="maleFertilityIssue" style="color: white;">Male Fertility Issue:</label>
+    <select id="maleFertilityIssue" name="maleFertilityIssue" required>
+      <option value="no">No</option>
+      <option value="yes">Yes</option>
+    </select>
+
+    <button class="predict-button" type="button" onclick="calculateSuccessRate()">Calculate</button>
+    <div id="result2"></div>
+    <div id="error-message" class="error-message"></div>
+  </form>
+</body>
+</html>
